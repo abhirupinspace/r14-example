@@ -1,0 +1,8 @@
+[package]
+name = "basic-keygen"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+r14-sdk = { git = "https://github.com/abhirupinspace/root-14-core" }

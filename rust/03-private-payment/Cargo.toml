@@ -1,0 +1,13 @@
+[package]
+name = "private-payment"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+r14-sdk = { git = "https://github.com/abhirupinspace/root-14-core", features = ["prove"] }
+ark-bls12-381 = "0.5"
+ark-ff = "0.5"
+ark-std = "0.5"
+tokio = { version = "1", features = ["full"] }
+anyhow = "1"

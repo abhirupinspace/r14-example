@@ -1,0 +1,8 @@
+[workspace]
+resolver = "2"
+members = [
+    "rust/01-basic-keygen",
+    "rust/02-offline-notes",
+    "rust/03-private-payment",
+    "rust/04-two-party",
+]
