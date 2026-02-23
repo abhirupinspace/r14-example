@@ -1,69 +1,40 @@
 # r14-examples
 
-Example projects for [Root14](https://github.com/abhirupinspace/root-14-core) — a ZK privacy protocol for Stellar.
+Two Rust demos for [Root14](https://github.com/abhirupinspace/root-14-core) — a ZK privacy protocol for Stellar.
 
 ## Examples
 
-### Rust (`rust/`)
-
 | Example | Description | ZK Proofs |
 |---------|-------------|-----------|
-| `01-basic-keygen` | Generate keypair, print owner hash | No |
-| `02-offline-notes` | Create notes, commitments, merkle tree | No |
-| `03-private-payment` | Full deposit → transfer → balance flow | Yes |
-| `04-two-party` | Alice → Bob private transfer demo | Yes |
+| `private-payments` | User A→User B deposit + transfer + balance | Groth16 (transfer circuit) |
+| `zktls` | Web2 credentials → on-chain proof | Poseidon commitment + simulated range proof |
 
-### CLI (`cli/`)
-
-Shell scripts for the `r14` command-line tool.
-
-| Script | Description |
-|--------|-------------|
-| `01-quickstart.sh` | Keygen → config → deposit → balance |
-| `02-transfer.sh` | Private transfer between wallets |
-| `03-status-check.sh` | Status and config inspection |
-
-### MCP (`mcp/`)
-
-Walkthroughs for Root14 MCP tools (Claude Code / MCP clients).
-
-| Guide | Description |
-|-------|-------------|
-| `01-setup-wallet.md` | Keygen → config via MCP |
-| `02-deposit-and-balance.md` | Deposit + balance via MCP |
-| `03-private-transfer.md` | Full transfer via MCP |
-
-## Quickstart
-
-```bash
-# run the simplest example (no network needed)
-cargo run -p basic-keygen
-
-# run offline note/merkle demo
-cargo run -p offline-notes
-
-# run full payment demo (offline by default, set env vars for testnet)
-cargo run -p private-payment
-
-# run Alice→Bob demo
-cargo run -p two-party
-```
-
-## Testnet Configuration
-
-For live testnet examples, set:
-
-```bash
-export R14_STELLAR_SECRET="S..."
-export R14_CORE_CONTRACT="C..."
-export R14_TRANSFER_CONTRACT="C..."
-export R14_INDEXER_URL="https://..."
-```
-
-## Building
+## Build & Run
 
 ```bash
 cargo build --workspace
+cargo run -p private-payments
+cargo run -p zktls
 ```
 
-Examples 03 and 04 require the `prove` feature (enabled by default in their Cargo.toml) which pulls in the ZK circuit. First build may take a few minutes.
+Both examples run fully offline — no testnet or indexer required.
+
+## private-payments
+
+Full two-party private payment flow:
+1. User A + User B keygen
+2. User A deposits 1000
+3. User A transfers 300 to User B with Groth16 proof
+4. Final balances: User A=700, User B=300
+
+## zktls
+
+zkTLS concept — prove private web2 data on-chain without revealing it:
+1. Mock TLS oracle fetches bank balance (15000)
+2. Poseidon commitment hides the value
+3. Range proof: "balance > 10000" (simulated — circuit not yet in r14-sdk)
+4. Verification table shows what's proved vs revealed (nothing)
+
+## Dependencies
+
+Both examples use `r14-sdk` with the `prove` feature for ZK circuit access. First build may take a few minutes.

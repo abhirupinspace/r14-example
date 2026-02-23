@@ -296,13 +296,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
 
 [[package]]
-name = "basic-keygen"
-version = "0.1.0"
-dependencies = [
- "r14-sdk",
-]
-
-[[package]]
 name = "bitflags"
 version = "2.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1193,13 +1186,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "offline-notes"
-version = "0.1.0"
-dependencies = [
- "r14-sdk",
-]
-
-[[package]]
 name = "once_cell"
 version = "1.21.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1293,7 +1279,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "private-payment"
+name = "private-payments"
 version = "0.1.0"
 dependencies = [
  "anyhow",
@@ -2132,18 +2118,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e421abadd41a4225275504ea4d6566923418b7f05506fbc9c0fe86ba7396114b"
 
 [[package]]
-name = "two-party"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "ark-bls12-381",
- "ark-ff",
- "ark-std",
- "r14-sdk",
- "tokio",
-]
-
-[[package]]
 name = "typenum"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2837,6 +2811,18 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.117",
+]
+
+[[package]]
+name = "zktls"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ark-bls12-381",
+ "ark-ff",
+ "ark-std",
+ "r14-sdk",
+ "tokio",
 ]
 
 [[package]]
