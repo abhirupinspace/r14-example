@@ -4,10 +4,10 @@ Two Rust demos for [Root14](https://github.com/abhirupinspace/root-14-core) — 
 
 ## Examples
 
-| Example | Description | ZK Proofs |
-|---------|-------------|-----------|
-| `private-payments` | User A→User B deposit + transfer + balance | Groth16 (transfer circuit) |
-| `zktls` | Web2 credentials → on-chain proof | Poseidon commitment + simulated range proof |
+| Example | Description | ZK Proofs | Network |
+|---------|-------------|-----------|---------|
+| `private-payments` | User A→User B deposit + transfer + balance | Groth16 (transfer circuit) | Offline |
+| `zktls` | Web2 credentials → testnet deposit → private ZK transfer | Poseidon commitment + Groth16 | Stellar testnet |
 
 ## Build & Run
 
@@ -17,11 +17,11 @@ cargo run -p private-payments
 cargo run -p zktls
 ```
 
-Both examples run fully offline — no testnet or indexer required.
+`private-payments` runs fully offline. `zktls` requires a configured wallet and Stellar testnet access.
 
 ## private-payments
 
-Full two-party private payment flow:
+Full two-party private payment flow (offline):
 1. User A + User B keygen
 2. User A deposits 1000
 3. User A transfers 300 to User B with Groth16 proof
@@ -29,11 +29,16 @@ Full two-party private payment flow:
 
 ## zktls
 
-zkTLS concept — prove private web2 data on-chain without revealing it:
-1. Mock TLS oracle fetches bank balance (15000)
-2. Poseidon commitment hides the value
-3. Range proof: "balance > 10000" (simulated — circuit not yet in r14-sdk)
-4. Verification table shows what's proved vs revealed (nothing)
+End-to-end zkTLS flow with real Stellar testnet transactions:
+1. Load wallet from `~/.r14/wallet.json`
+2. TLS oracle fetches private bank balance (simulated source, real value)
+3. Poseidon commitment hides the value
+4. Deposit the value as a shielded note on Stellar testnet
+5. Balance check confirms on-chain note
+6. Private transfer to a second user with Groth16 ZK proof
+7. Final balance reflects the transfer — value never revealed on-chain
+
+**Setup:** Run `r14_keygen` then configure `stellar_secret`, `core_contract_id`, and `transfer_contract_id` via `r14_config_set`.
 
 ## Dependencies
 
